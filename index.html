@@ -95,8 +95,9 @@ html{scrollbar-width:thin;scrollbar-color:var(--accent) transparent}
 /* HERO */
 .hero{position:relative;min-height:calc(100svh - 76px);display:flex;align-items:center;padding-block:clamp(48px,7vw,96px);overflow:hidden}
 .hero .wrap{width:100%}
-#blob{position:absolute;top:50%;right:max(var(--gutr),calc((100vw - var(--wrap))/2));translate:0 -50%;width:min(46vw,640px);aspect-ratio:1;pointer-events:none;z-index:0}
-@media (max-width:760px){#blob{width:min(92vw,460px);right:50%;translate:50% -50%;opacity:.45}}
+#blob{position:absolute;top:50%;right:max(var(--gutr),calc((100vw - var(--wrap))/2));translate:0 -50%;width:min(56vw,800px,calc(100svh - 110px));aspect-ratio:1;pointer-events:none;z-index:0}
+.hero.drag{cursor:grabbing;user-select:none}
+@media (max-width:760px){#blob{width:min(100vw,520px);right:50%;translate:50% -50%;opacity:.45}}
 .hero .wrap{position:relative;z-index:1}
 .kicker{font-family:var(--display);font-weight:600;font-size:clamp(22px,3.2vw,40px);line-height:1.15;max-width:22ch;margin:0 0 .25em}
 .kicker em{font-style:normal;color:var(--muted)}
@@ -106,8 +107,18 @@ html{scrollbar-width:thin;scrollbar-color:var(--accent) transparent}
 .big .ch.out{transform:translateY(-40%) scale(.96);opacity:0;filter:blur(10px);transition-duration:.7s,.6s,.6s;transition-timing-function:cubic-bezier(.7,0,.84,0),ease,ease}
 .big .ch.in{transform:translateY(60%) scale(.96);opacity:0;filter:blur(12px)}
 .big-mask{overflow:hidden;padding-bottom:.08em}
-.hero-foot{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:28px;margin-top:clamp(28px,4vw,56px)}
-.hero-foot p{max-width:46ch;margin:0;font-size:clamp(17px,1.5vw,20px);color:var(--muted)}
+.hero-foot{margin-top:clamp(20px,3vw,36px)}
+.hero-foot p{max-width:52ch;margin:0;font-size:clamp(17px,1.5vw,20px);color:var(--muted)}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.hero-cta .pill{padding:14px 24px}
+.ghost{display:inline-flex;align-items:center;padding:12px 22px;border-radius:999px;border:1.5px solid var(--ink);text-decoration:none;font-weight:600;background:color-mix(in oklab,var(--paper) 70%,transparent);transition:background .25s,color .25s,transform .25s}
+.ghost:hover{background:var(--ink);color:var(--paper);transform:translateY(-2px)}
+.chips{list-style:none;display:flex;flex-wrap:wrap;gap:8px;padding:0;margin:28px 0 0;max-width:640px}
+.chips li{padding:6px 14px;border-radius:999px;border:1px solid var(--line);background:color-mix(in oklab,var(--surface) 75%,transparent);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);font-size:14px;font-weight:500}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) auto;gap:24px;align-items:end;margin-top:clamp(36px,5vw,64px);padding-top:22px;border-top:1px solid var(--line)}
+.facts b{display:block;font-family:var(--display);font-size:20px;font-weight:600}
+.facts span{color:var(--muted);font-size:15px}
+@media (max-width:760px){.facts{grid-template-columns:1fr 1fr}.facts .scrollcue{display:none}}
 .hero-foot p strong{color:var(--ink);font-weight:600}
 .scrollcue{display:flex;align-items:center;gap:12px}
 .scrollcue span{width:44px;height:44px;border:1.5px solid var(--ink);border-radius:50%;display:grid;place-items:center;animation:bob 2.4s ease-in-out infinite}
@@ -141,6 +152,30 @@ section.block{padding-block:clamp(80px,11vw,160px)}
 .tile .arrow{flex:none;width:44px;height:44px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;transition:all .3s}
 .tile:hover .arrow{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);transform:rotate(-45deg)}
 .note{margin-top:22px;color:var(--muted);font-size:14px}
+.tile .more-link{display:inline-block;margin-top:10px;font-size:14px;font-weight:600;color:var(--accent)}
+
+/* DETAIL SHEET */
+.sheet{width:min(920px,calc(100vw - 24px));max-height:calc(100svh - 48px);padding:0;border:0;border-radius:28px;background:var(--surface);color:var(--ink);overflow:auto;box-shadow:0 40px 120px -20px rgba(0,0,0,.45)}
+.sheet::backdrop{background:rgba(8,9,14,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.sheet[open]{animation:sheetIn .5s cubic-bezier(.16,1,.3,1)}
+@keyframes sheetIn{from{opacity:0;transform:translateY(30px) scale(.97)}}
+.sheet-head{position:relative;padding:clamp(28px,4vw,48px);background:var(--sbg,var(--t1))}
+.sheet-head .tag{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
+.sheet-head .tag span{background:var(--surface);padding:5px 10px;border-radius:999px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+.sheet-head h2{font-size:clamp(36px,5vw,64px);font-weight:800;letter-spacing:-.04em;line-height:.95}
+.sheet-head p{margin:14px 0 0;max-width:56ch;font-size:clamp(17px,1.6vw,20px)}
+.sheet-x{position:absolute;top:18px;right:18px;width:44px;height:44px;border-radius:50%;border:0;background:var(--surface);color:var(--ink);font-size:22px;cursor:pointer;transition:transform .3s}
+.sheet-x:hover{transform:rotate(90deg)}
+.sheet-body{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,3vw,40px);padding:clamp(28px,4vw,48px)}
+.sheet-body h3{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+.sheet-body p{margin:0;color:var(--muted)}
+.sheet-body ul,.sheet-body ol{margin:0;padding-left:20px;display:grid;gap:8px}
+.sheet-body .full{grid-column:1/-1}
+.stack{display:flex;flex-wrap:wrap;gap:8px}
+.stack span{padding:6px 12px;border-radius:999px;border:1px solid var(--line);font-size:14px}
+.sheet-foot{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding:22px clamp(28px,4vw,48px);border-top:1px solid var(--line)}
+.sheet-foot small{color:var(--muted)}
+@media (max-width:700px){.sheet-body{grid-template-columns:1fr}}
 @media (max-width:760px){.tile,.tile.wide,.tile.narrow{grid-column:span 12}}
 
 /* CAPABILITIES */
@@ -148,16 +183,23 @@ section.block{padding-block:clamp(80px,11vw,160px)}
 .sec-head.sticky{position:sticky;top:120px;flex-direction:column;align-items:start;margin:0}
 @media (max-width:860px){.split{grid-template-columns:1fr}.sec-head.sticky{position:static}}
 .caps{border-top:1.5px solid var(--ink)}
-.cap{display:grid;grid-template-columns:1fr 40px;gap:8px 16px;align-items:center;padding-block:22px;border-bottom:1px solid var(--line);position:relative;cursor:default;transition:padding .4s}
+.cap{display:grid;grid-template-columns:1fr 40px;gap:8px 16px;align-items:center;padding-block:22px;border-bottom:1px solid var(--line);position:relative;cursor:pointer;transition:padding .4s}
 .cap::before{content:"";position:absolute;inset:0;background:var(--cap,var(--t1));transform:scaleY(0);transform-origin:bottom;transition:transform .45s cubic-bezier(.2,.9,.2,1);z-index:-1;border-radius:14px}
-.cap:hover::before{transform:scaleY(1)}
-.cap:hover{padding-inline:18px}
+.cap:hover::before,.cap.open::before{transform:scaleY(1)}
+.cap:hover,.cap.open{padding-inline:18px}
 .cap .cat{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .cap h3{font-size:clamp(24px,3vw,40px);font-weight:600;line-height:1.05}
 .cap p{margin:0;color:var(--muted);min-width:0}
-.cap:hover p,.cap:hover .cat{color:var(--ink)}
+.cap:hover p,.cap:hover .cat,.cap.open p,.cap.open .cat{color:var(--ink)}
 .cap .plus{width:40px;height:40px;border-radius:50%;border:1.5px solid currentColor;display:grid;place-items:center;font-size:20px;transition:transform .4s}
 .cap:hover .plus{transform:rotate(90deg)}
+.cap.open .plus{transform:rotate(45deg)}
+.cap-more{grid-column:1/-1;display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s cubic-bezier(.16,1,.3,1)}
+.cap.open .cap-more{grid-template-rows:1fr}
+.cap-more>div{overflow:hidden}
+.cap-more ul{margin:12px 0 0;padding-left:20px;display:grid;gap:6px}
+.cap-more .stack{margin-top:14px}
+.cap-more .stack span{border-color:color-mix(in oklab,var(--ink) 25%,transparent)}
 .caps.hidden-rows .cap.extra{display:none}
 .more{margin-top:24px}
 .cap .cat{grid-column:1/-1}.cap p{grid-column:1/2}.cap .plus{grid-row:2;grid-column:2}
@@ -272,8 +314,20 @@ footer .eyebrow{color:inherit;margin-bottom:28px}
       <p class="kicker">We make digital <em>(and magical)</em>…</p>
       <div class="big-mask"><h1 class="big" id="big" aria-live="polite">Experiences.</h1></div>
       <div class="hero-foot">
-        <p><strong>Xentrix is a London engineering studio</strong> putting AI to work in kitchens, corner shops and boardrooms. Agents, ledgers, data and code, designed and shipped by one crew.</p>
-        <div class="scrollcue mono"><span aria-hidden="true">↓</span>Scroll to explore</div>
+        <p><strong>Xentrix is a London-based technology studio</strong> helping small, medium and enterprise businesses around the world put AI and modern tech to work. From AI agents and automation to data, cloud and full-stack products, we design, build and support it all.</p>
+      </div>
+      <div class="hero-cta">
+        <a class="pill" href="#contact">Start a project <span aria-hidden="true">→</span></a>
+        <a class="ghost" href="#lab">See what we build</a>
+      </div>
+      <ul class="chips" aria-label="What we do">
+        <li>AI agents</li><li>Automation</li><li>Machine learning</li><li>Data &amp; analytics</li><li>Cloud</li><li>Web &amp; mobile apps</li><li>QA &amp; security</li>
+      </ul>
+      <div class="facts">
+        <div><b>Every size</b><span>Startups, SMEs and enterprise teams</span></div>
+        <div><b>Worldwide</b><span>Based in London, working with clients globally</span></div>
+        <div><b>End to end</b><span>Strategy, design, build and ongoing support</span></div>
+        <div class="scrollcue mono"><span aria-hidden="true">↓</span>Scroll</div>
       </div>
     </div>
   </section>
@@ -284,34 +338,39 @@ footer .eyebrow{color:inherit;margin-bottom:28px}
       <div class="sec-head">
         <span class="eyebrow">01 · Lab</span>
         <h2>From the lab.</h2>
-        <p>Concept builds that show the kind of things we make.</p>
+        <p>Concept builds that show the kind of things we make. Click any card for the full breakdown.</p>
       </div>
       <div class="grid" id="grid">
-        <article class="tile wide" data-cat="agents ai" tabindex="0">
+        <article class="tile wide" data-cat="agents ai" data-p="ledger" tabindex="0" role="button" aria-haspopup="dialog">
           <div class="art" style="background:var(--t3)"><canvas data-mode="ledger" data-c="#2B37FF"></canvas><div class="tag"><span>Agents</span><span>Accounting</span></div></div>
-          <div class="meta"><div><h3>Ledgerline</h3><p>An accounting agent that sorts receipts, matches bank lines and drafts invoices before your coffee cools.</p></div><span class="arrow" aria-hidden="true">→</span></div>
+          <div class="meta"><div><h3>Ledgerline</h3><p>An accounting agent that sorts receipts, matches bank lines and drafts invoices before your coffee cools.</p><span class="more-link">View details →</span></div><span class="arrow" aria-hidden="true">→</span></div>
         </article>
-        <article class="tile narrow" data-cat="agents ai" tabindex="0">
+        <article class="tile narrow" data-cat="agents ai" data-p="halo" tabindex="0" role="button" aria-haspopup="dialog">
           <div class="art" style="background:var(--t2)"><canvas data-mode="pulse" data-c="#FF5A36"></canvas><div class="tag"><span>Agents</span><span>Home</span></div></div>
-          <div class="meta"><div><h3>Halo Home</h3><p>A household agent that juggles bills, school runs and the weekly shop.</p></div><span class="arrow" aria-hidden="true">→</span></div>
+          <div class="meta"><div><h3>Halo Home</h3><p>A household agent that juggles bills, school runs and the weekly shop.</p><span class="more-link">View details →</span></div><span class="arrow" aria-hidden="true">→</span></div>
         </article>
-        <article class="tile narrow" data-cat="chain" tabindex="0">
+        <article class="tile narrow" data-cat="chain" data-p="tidewater" tabindex="0" role="button" aria-haspopup="dialog">
           <div class="art" style="background:var(--t1)"><canvas data-mode="orbit" data-c="#0077C8"></canvas><div class="tag"><span>Chain</span><span>Payments</span></div></div>
-          <div class="meta"><div><h3>Tidewater</h3><p>Cross-chain payroll on stablecoins, with every contract stress-tested on testnet first.</p></div><span class="arrow" aria-hidden="true">→</span></div>
+          <div class="meta"><div><h3>Tidewater</h3><p>Cross-chain payroll on stablecoins, with every contract stress-tested on testnet first.</p><span class="more-link">View details →</span></div><span class="arrow" aria-hidden="true">→</span></div>
         </article>
-        <article class="tile wide" data-cat="data ai" tabindex="0">
+        <article class="tile wide" data-cat="data ai" data-p="glasshouse" tabindex="0" role="button" aria-haspopup="dialog">
           <div class="art" style="background:var(--t4)"><canvas data-mode="waves" data-c="#178A3A"></canvas><div class="tag"><span>Data</span><span>Forecasting</span></div></div>
-          <div class="meta"><div><h3>Glasshouse</h3><p>A live warehouse you can question in plain English, with forecasts that show their working.</p></div><span class="arrow" aria-hidden="true">→</span></div>
+          <div class="meta"><div><h3>Glasshouse</h3><p>A live warehouse you can question in plain English, with forecasts that show their working.</p><span class="more-link">View details →</span></div><span class="arrow" aria-hidden="true">→</span></div>
         </article>
-        <article class="tile wide" data-cat="eng" tabindex="0">
+        <article class="tile wide" data-cat="eng" data-p="patchwork" tabindex="0" role="button" aria-haspopup="dialog">
           <div class="art" style="background:var(--t5)"><canvas data-mode="blocks" data-c="#B88A00"></canvas><div class="tag"><span>Engineering</span><span>QA</span></div></div>
-          <div class="meta"><div><h3>Patchwork</h3><p>Self-healing CI that spots a regression, writes the fix and opens the pull request.</p></div><span class="arrow" aria-hidden="true">→</span></div>
+          <div class="meta"><div><h3>Patchwork</h3><p>Self-healing CI that spots a regression, writes the fix and opens the pull request.</p><span class="more-link">View details →</span></div><span class="arrow" aria-hidden="true">→</span></div>
         </article>
-        <article class="tile narrow" data-cat="ai eng" tabindex="0">
+        <article class="tile narrow" data-cat="ai eng" data-p="storefront" tabindex="0" role="button" aria-haspopup="dialog">
           <div class="art" style="background:var(--t6)"><canvas data-mode="rings" data-c="#D21F8A"></canvas><div class="tag"><span>AI</span><span>Web</span></div></div>
-          <div class="meta"><div><h3>Storefront.ai</h3><p>Client websites with a built-in assistant that answers, books and sells around the clock.</p></div><span class="arrow" aria-hidden="true">→</span></div>
+          <div class="meta"><div><h3>Storefront.ai</h3><p>Client websites with a built-in assistant that answers, books and sells around the clock.</p><span class="more-link">View details →</span></div><span class="arrow" aria-hidden="true">→</span></div>
         </article>
       </div>
+      <dialog class="sheet" id="sheet" aria-labelledby="sheet-title">
+        <div class="sheet-head" id="sheet-head"><button class="sheet-x" id="sheet-x" aria-label="Close">×</button><div class="tag" id="sheet-tags"></div><h2 id="sheet-title"></h2><p id="sheet-lead"></p></div>
+        <div class="sheet-body" id="sheet-body"></div>
+        <div class="sheet-foot"><small>Studio concept. We can build this, or something like it, for you.</small><a class="pill" id="sheet-cta" href="#contact">Build something like this <span aria-hidden="true">→</span></a></div>
+      </dialog>
       <p class="note">These are studio concepts, not client case studies. Yours could be the first real one here.</p>
     </div>
   </section>
@@ -439,35 +498,65 @@ function fit(cv){const r=cv.getBoundingClientRect(),d=Math.min(devicePixelRatio|
 const blob = document.getElementById('blob');
 let cur = [43,55,255];
 const hex = h=>[parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)];
-/* Neural globe: fibonacci sphere of nodes, wired to near neighbours, with signals racing along the wires. Follows the pointer. */
+/* Neural globe: fibonacci sphere of nodes, wired to near neighbours, with signals racing along the wires. Follows, bends around and reacts to the pointer. */
 const GN=240, nodes=[], edges=[], adj=[];
 for(let i=0;i<GN;i++){const y=1-(i+.5)/GN*2, r=Math.sqrt(1-y*y), a=i*2.39996;nodes.push([Math.cos(a)*r,y,Math.sin(a)*r,Math.random()*6.28]);adj.push([]);}
 for(let i=0;i<GN;i++)for(let j=i+1;j<GN;j++){const p=nodes[i],q=nodes[j];if((p[0]-q[0])**2+(p[1]-q[1])**2+(p[2]-q[2])**2<.11){adj[i].push(edges.length);adj[j].push(edges.length);edges.push([i,j]);}}
 const ring=Array.from({length:110},(_,i)=>i/110*Math.PI*2);
-const pulses=Array.from({length:22},()=>({e:Math.random()*edges.length|0,p:Math.random(),dir:1,v:.012+Math.random()*.018}));
-const ptr={x:0,y:0,tx:0,ty:0};
-document.querySelector('.hero').addEventListener('pointermove',e=>{const r=blob.getBoundingClientRect();ptr.tx=((e.clientX-r.left)/r.width-.5)*2;ptr.ty=((e.clientY-r.top)/r.height-.5)*2;});
-document.querySelector('.hero').addEventListener('pointerleave',()=>{ptr.tx=0;ptr.ty=0;});
+const pulses=Array.from({length:26},()=>({e:Math.random()*edges.length|0,p:Math.random(),dir:1,v:.012+Math.random()*.018}));
+const ptr={x:0,y:0,tx:0,ty:0}, m={x:-1e4,y:-1e4,on:0,a:0}, waves=[];
+let spin=0, vel=0, drag=null;
+const hero=document.querySelector('.hero');
+const local=e=>{const r=blob.getBoundingClientRect();return [e.clientX-r.left,e.clientY-r.top,r];};
+hero.addEventListener('pointermove',e=>{
+  const [lx,ly,r]=local(e);ptr.tx=(lx/r.width-.5)*2;ptr.ty=(ly/r.height-.5)*2;m.x=lx;m.y=ly;m.on=1;
+  if(drag){vel=(e.clientX-drag)*.004;drag=e.clientX;}
+});
+hero.addEventListener('pointerleave',()=>{ptr.tx=0;ptr.ty=0;m.on=0;drag=null;hero.classList.remove('drag');});
+// drag (mouse) to spin with inertia; click or tap anywhere in the hero to send a shockwave through the network
+hero.addEventListener('pointerdown',e=>{
+  if(e.target.closest('a,button'))return;
+  const [lx,ly]=local(e);waves.push({x:lx,y:ly,t:performance.now()});if(waves.length>4)waves.shift();
+  for(let i=0;i<10;i++){pulses.push({e:Math.random()*edges.length|0,p:0,dir:1,v:.03+Math.random()*.03,life:160});}
+  if(e.pointerType==='mouse'){drag=e.clientX;hero.classList.add('drag');}
+});
+addEventListener('pointerup',()=>{drag=null;hero.classList.remove('drag');});
 function drawBlob(t){
   const [x,w,h]=fit(blob); x.clearRect(0,0,w,h);
   const tgt=hex(blobColor); cur=cur.map((v,i)=>v+(tgt[i]-v)*.04);
-  ptr.x+=(ptr.tx-ptr.x)*.05; ptr.y+=(ptr.ty-ptr.y)*.05;
+  ptr.x+=(ptr.tx-ptr.x)*.06; ptr.y+=(ptr.ty-ptr.y)*.06; m.a+=(m.on-m.a)*.08;
+  spin+=.003+vel; vel*=drag?.8:.96;
   const c=cur.map(Math.round).join(','), cx=w/2, cy=h/2, R=w*.3;
-  const ay=t*.00018+ptr.x*.6+scrollY*.002, ax=-.35+ptr.y*.4;
+  const ay=spin+ptr.x*.7+scrollY*.002, ax=-.35+ptr.y*.5;
   const sy=Math.sin(ay),cy_=Math.cos(ay),sx=Math.sin(ax),cx_=Math.cos(ax);
-  const proj=(px,py,pz,s)=>{const X=px*cy_-pz*sy, Z0=px*sy+pz*cy_, Y=py*cx_-Z0*sx, Z=py*sx+Z0*cx_;const k=4/(4-Z);return [cx+X*R*s*k, cy+Y*R*s*k, Z, k];};
-  // soft core glow
-  const g=x.createRadialGradient(cx,cy,0,cx,cy,R*1.25);
-  g.addColorStop(0,`rgba(${c},.28)`);g.addColorStop(.55,`rgba(${c},.08)`);g.addColorStop(1,`rgba(${c},0)`);
+  const proj=(px,py,pz,s)=>{const X=px*cy_-pz*sy, Z0=px*sy+pz*cy_, Y=py*cx_-Z0*sx, Z=py*sx+Z0*cx_;const k=4/(4-Z);return [cx+X*R*s*k, cy+Y*R*s*k, Z, k, 0];};
+  // soft core glow, brighter while the pointer is over the hero
+  const g=x.createRadialGradient(cx,cy,0,cx,cy,R*1.3);
+  g.addColorStop(0,`rgba(${c},${(.28+.14*m.a).toFixed(3)})`);g.addColorStop(.55,`rgba(${c},.08)`);g.addColorStop(1,`rgba(${c},0)`);
   x.fillStyle=g;x.fillRect(0,0,w,h);
   // nodes breathe outward in a travelling wave
   const P=nodes.map(n=>proj(n[0],n[1],n[2],1+.05*Math.sin(t*.0016+n[1]*4+n[3])));
+  // cursor bends the network away from it; shockwaves ripple outward from clicks
+  const near=R*.75, now=performance.now();
+  for(const p of P){
+    let dx=p[0]-m.x, dy=p[1]-m.y, d=Math.hypot(dx,dy)||1;
+    if(m.a>.01&&d<near){const f=(1-d/near)**2*m.a;p[0]+=dx/d*f*34;p[1]+=dy/d*f*34;p[4]=Math.max(p[4],f);}
+    for(const wv of waves){const age=now-wv.t;if(age>1400)continue;const rad=age*.55;dx=p[0]-wv.x;dy=p[1]-wv.y;d=Math.hypot(dx,dy)||1;
+      const b=Math.exp(-(((d-rad)/38)**2))*(1-age/1400);p[0]+=dx/d*b*26;p[1]+=dy/d*b*26;p[4]=Math.max(p[4],b);}
+  }
   x.lineWidth=1;
-  for(const [i,j] of edges){const a=P[i],b=P[j],d=(a[2]+b[2])/2;x.strokeStyle=`rgba(${c},${(.06+.32*(d+1)/2).toFixed(3)})`;x.beginPath();x.moveTo(a[0],a[1]);x.lineTo(b[0],b[1]);x.stroke();}
-  for(let i=0;i<GN;i++){const p=P[i],f=(p[2]+1)/2,tw=.5+.5*Math.sin(t*.003+nodes[i][3]*3);x.fillStyle=`rgba(${c},${(.2+.7*f).toFixed(3)})`;x.beginPath();x.arc(p[0],p[1],(1+2.2*f+tw*f)*p[3],0,7);x.fill();}
-  // signals hop from wire to wire
-  for(const s of pulses){
-    s.p+=s.v; if(s.p>=1){const [a,b]=edges[s.e],end=s.dir>0?b:a,opts=adj[end];s.e=opts[Math.random()*opts.length|0];s.dir=edges[s.e][0]===end?1:-1;s.p=0;}
+  for(const [i,j] of edges){const a=P[i],b=P[j],d=(a[2]+b[2])/2,hl=Math.max(a[4],b[4]);x.strokeStyle=`rgba(${c},${Math.min(1,.06+.32*(d+1)/2+.6*hl).toFixed(3)})`;x.lineWidth=1+hl*1.5;x.beginPath();x.moveTo(a[0],a[1]);x.lineTo(b[0],b[1]);x.stroke();}
+  x.lineWidth=1;
+  // constellation lines from the cursor to the nodes it is touching
+  if(m.a>.01)for(const p of P){const d=Math.hypot(p[0]-m.x,p[1]-m.y);if(d<near*.8&&p[2]>-.2){x.strokeStyle=`rgba(${c},${((1-d/(near*.8))*.55*m.a).toFixed(3)})`;x.beginPath();x.moveTo(m.x,m.y);x.lineTo(p[0],p[1]);x.stroke();}}
+  for(let i=0;i<GN;i++){const p=P[i],f=(p[2]+1)/2,tw=.5+.5*Math.sin(t*.003+nodes[i][3]*3);x.fillStyle=`rgba(${c},${Math.min(1,.2+.7*f+p[4]).toFixed(3)})`;x.beginPath();x.arc(p[0],p[1],(1+2.2*f+tw*f+p[4]*3)*p[3],0,7);x.fill();}
+  // shockwave rings
+  for(const wv of waves){const age=now-wv.t;if(age>1400)continue;x.strokeStyle=`rgba(${c},${(.5*(1-age/1400)).toFixed(3)})`;x.lineWidth=2;x.beginPath();x.arc(wv.x,wv.y,age*.55,0,7);x.stroke();}
+  x.lineWidth=1;
+  // signals hop from wire to wire; click bursts fade out after a while
+  for(let k=pulses.length-1;k>=0;k--){const s=pulses[k];
+    if(s.life!==undefined&&--s.life<=0){pulses.splice(k,1);continue;}
+    s.p+=s.v*(1+m.a*.6); if(s.p>=1){const [a,b]=edges[s.e],end=s.dir>0?b:a,opts=adj[end];s.e=opts[Math.random()*opts.length|0];s.dir=edges[s.e][0]===end?1:-1;s.p=0;}
     const [a,b]=edges[s.e],u=s.dir>0?s.p:1-s.p,A=P[a],B=P[b],px=A[0]+(B[0]-A[0])*u,py=A[1]+(B[1]-A[1])*u,f=((A[2]+B[2])/2+1)/2;
     const gg=x.createRadialGradient(px,py,0,px,py,14*f+2);gg.addColorStop(0,`rgba(${c},${(.9*f).toFixed(3)})`);gg.addColorStop(1,`rgba(${c},0)`);
     x.fillStyle=gg;x.beginPath();x.arc(px,py,14*f+2,0,7);x.fill();x.fillStyle=`rgba(255,255,255,${(.9*f).toFixed(3)})`;x.beginPath();x.arc(px,py,1.6*f+.6,0,7);x.fill();
@@ -526,6 +615,91 @@ function frame(t){
 drawBlob(0);tiles.forEach(c=>drawTile(c,0));
 if(!reduce)requestAnimationFrame(frame);
 addEventListener('resize',()=>{drawBlob(performance.now());tiles.forEach(c=>drawTile(c,0));});
+
+/* ---------- Lab detail sheets ---------- */
+const projects={
+  ledger:{bg:'--t3',tags:['Agents','Accounting'],title:'Ledgerline',lead:'An AI accounting agent that takes the admin out of bookkeeping, so finance teams spend their time on decisions instead of data entry.',
+    problem:'Small finance teams lose days every month chasing receipts, reconciling bank lines and sending invoices by hand.',
+    does:['Reads receipts and invoices from email, photos and PDFs','Matches bank transactions to invoices and flags anything unusual','Drafts and sends invoices from signed quotes, then politely chases late payers','Prepares VAT returns and month-end packs for your accountant to review'],
+    how:['Connects to your bank feed and accounting software such as Xero or QuickBooks','An AI model classifies and matches each line with a confidence score','Low-confidence items go to a human review queue','Every action is logged for a complete audit trail'],
+    stack:['Python','LLMs','OCR','Open Banking APIs','Xero / QuickBooks APIs','PostgreSQL'],
+    fit:'Accounting firms, bookkeepers and growing businesses with 5 to 200 staff.'},
+  halo:{bg:'--t2',tags:['Agents','Home'],title:'Halo Home',lead:'A calm household assistant that handles bills, diaries and everyday admin quietly in the background.',
+    problem:'Bills, renewals, school logistics and the weekly shop add up to hours of mental load every week.',
+    does:['Tracks bills, tariffs and renewals and suggests cheaper deals','Keeps a shared family calendar in sync and spots clashes early','Builds shopping lists from meal plans and what is already at home','Finds overlapping subscriptions and suggests what to cancel'],
+    how:['Connects to email, calendars and optional bank data with read-only access','Proposes actions; anything involving money waits for your approval','Sends one short daily summary instead of constant notifications'],
+    stack:['LLM agents','Calendar & email APIs','Open Banking','React Native','Node.js'],
+    fit:'Consumer apps, banks, insurers and utilities that want to offer a smart assistant to their customers.'},
+  tidewater:{bg:'--t1',tags:['Payments','Global'],title:'Tidewater',lead:'Fast, low-cost global payroll for remote teams, settled in minutes instead of days.',
+    problem:'Paying contractors across many countries through traditional banks is slow, expensive and hard to track.',
+    does:['Runs payroll in stablecoins across several networks','Settles in minutes with low, predictable fees','Handles approvals, payment schedules and payslips','Exports clean records for accounting and compliance'],
+    how:['Smart contracts hold and release funds on approved schedules','Every contract is stress-tested and audited on testnet before going live','A simple web dashboard hides the technical complexity from finance teams'],
+    stack:['Solidity','Rust','TypeScript','Wallet integrations','React'],
+    fit:'Remote-first companies and agencies paying teams around the world.'},
+  glasshouse:{bg:'--t4',tags:['Data','Forecasting'],title:'Glasshouse',lead:'One trusted home for your business data, with answers in plain English and forecasts that show their working.',
+    problem:'Data is scattered across tools, reports disagree, and nobody fully trusts the numbers in the spreadsheet.',
+    does:['Brings CRM, finance, product and marketing data into one warehouse','Lets anyone ask questions in plain English and get charts back','Forecasts sales, demand and cash flow, with the reasoning behind each number','Sends alerts when key metrics move unexpectedly'],
+    how:['Automated pipelines clean and model the data every night','An AI layer turns questions into safe, read-only queries','Forecast models are retrained and back-tested on a regular schedule'],
+    stack:['Python','dbt','Snowflake / BigQuery','Airflow','LLMs','Forecasting models'],
+    fit:'Operations, finance and leadership teams in mid-size and enterprise companies.'},
+  patchwork:{bg:'--t5',tags:['Engineering','QA'],title:'Patchwork',lead:'Self-healing CI that finds what broke, writes the fix and opens a pull request for your team to approve.',
+    problem:'Bugs slip into releases and engineers lose hours working out why a test suddenly failed.',
+    does:['Watches every build and test run in your pipeline','Pinpoints the exact change that caused a failure','Suggests a fix and opens a pull request for review','Tracks flaky tests and code health over time'],
+    how:['Hooks into GitHub, GitLab or Bitbucket pipelines','Static analysis and AI code review narrow down the root cause','Engineers always approve fixes before anything is merged'],
+    stack:['GitHub Actions','Python','TypeScript','Static analysis','LLM code models','Docker'],
+    fit:'Software teams of any size that want faster and safer releases.'},
+  storefront:{bg:'--t6',tags:['AI','Web'],title:'Storefront.ai',lead:'A modern business website with a built-in assistant that answers questions, takes bookings and sells around the clock.',
+    problem:'Most business websites cannot answer questions, take bookings or make sales outside office hours.',
+    does:['A fast, modern website designed around your brand','An AI assistant trained on your services, prices and FAQs','Online booking and secure payments built in','Hands tricky questions to your team with the full conversation attached'],
+    how:['We design and build the site, then train the assistant on your content','Bookings and payments connect to tools you already use, such as Stripe and Google Calendar','Monthly reports show what customers ask about and what converts'],
+    stack:['Next.js','Node.js','Stripe','LLM assistant','Headless CMS','Cloud hosting'],
+    fit:'Clinics, salons, trades, restaurants, agencies and online shops.'}
+};
+const sheet=document.getElementById('sheet'),esc=t=>t.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const li=a=>a.map(i=>`<li>${esc(i)}</li>`).join('');
+function openProject(k){
+  const d=projects[k];
+  document.getElementById('sheet-head').style.setProperty('--sbg',`var(${d.bg})`);
+  document.getElementById('sheet-tags').innerHTML=d.tags.map(t=>`<span>${esc(t)}</span>`).join('');
+  document.getElementById('sheet-title').textContent=d.title;
+  document.getElementById('sheet-lead').textContent=d.lead;
+  document.getElementById('sheet-body').innerHTML=`<div><h3>The problem</h3><p>${esc(d.problem)}</p></div><div><h3>Great for</h3><p>${esc(d.fit)}</p></div>
+    <div><h3>What it does</h3><ul>${li(d.does)}</ul></div><div><h3>How it works</h3><ol>${li(d.how)}</ol></div>
+    <div class="full"><h3>Built with</h3><div class="stack">${d.stack.map(t=>`<span>${esc(t)}</span>`).join('')}</div></div>`;
+  document.getElementById('sheet-cta').href=`mailto:contact@xentrixltd.co.uk?subject=${encodeURIComponent('Project enquiry: something like '+d.title)}`;
+  if(sheet.showModal)sheet.showModal();else sheet.setAttribute('open','');
+}
+document.querySelectorAll('.tile[data-p]').forEach(t=>{
+  t.addEventListener('click',()=>openProject(t.dataset.p));
+  t.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openProject(t.dataset.p);}});
+});
+document.getElementById('sheet-x').addEventListener('click',()=>sheet.close());
+sheet.addEventListener('click',e=>{if(e.target===sheet)sheet.close();});
+
+/* ---------- Capability details ---------- */
+const capInfo={
+  'AI agents':[['Agents for email triage, data entry, reporting and customer requests','Connected to the tools you already use: Gmail or Outlook, CRM, Slack, spreadsheets and ERPs','Approval steps, permissions and full audit logs built in'],['LLMs','LangGraph','Python','Node.js']],
+  'Self-driving books':[['Automatic categorisation, reconciliation and reporting','Invoicing, payment chasing and VAT preparation','Integrations with Xero, QuickBooks, Sage and Open Banking'],['Python','OCR','Open Banking','Accounting APIs']],
+  'Applied machine learning':[['Custom models for text, images, prediction and recommendations','Assistants that answer questions from your own documents (RAG)','Evaluation, monitoring and retraining so models stay accurate'],['PyTorch','scikit-learn','Hugging Face','Vector databases']],
+  'On-chain products':[['Smart contracts, tokens and DeFi protocols','Security reviews and testnet audits before launch','Dashboards that make blockchain simple for end users'],['Solidity','Rust','Foundry','ethers.js']],
+  'Payments that settle':[['Wallet connections and multi-network payment rails','Stablecoin and fiat on/off-ramp integrations','Gas-efficient, audited contracts'],['Solidity','TypeScript','Wallet SDKs']],
+  'Forecasts & insight':[['Sales, demand and cash-flow forecasting','Dashboards your team will actually use','Clear statistics and A/B test analysis'],['Python','Power BI','Looker','Metabase']],
+  'Data plumbing':[['Data warehouses and lakehouses','ETL and ELT pipelines from any source','Automated data quality checks and monitoring'],['dbt','Airflow','Snowflake','BigQuery','PostgreSQL']],
+  'Bug hunting':[['Automated code scanning and static analysis','Root-cause debugging for tricky production issues','Safe, step-by-step refactors of legacy code'],['Semgrep','SonarQube','Sentry','Profilers']],
+  'Test & assurance':[['Unit, integration and end-to-end test suites','Security testing and load testing','CI/CD pipelines that keep every release safe'],['Playwright','Cypress','k6','GitHub Actions']],
+  'Systems architecture':[['Cloud architecture on AWS, Azure or Google Cloud','Microservices, APIs and event-driven systems','Cost, security and scalability reviews'],['AWS','Azure','GCP','Kubernetes','Terraform']],
+  'Full-stack product':[['MVPs and production web and mobile apps','Admin panels, client portals and SaaS platforms','Deployment, monitoring and ongoing support'],['React','Next.js','Node.js','Python','React Native']],
+  'Websites for clients':[['Fast, SEO-friendly business websites','AI chat assistants, bookings and online payments','Easy content editing for your team'],['Next.js','Headless CMS','Stripe']]
+};
+document.querySelectorAll('.cap').forEach(c=>{
+  const info=capInfo[c.querySelector('h3').textContent];if(!info)return;
+  const more=document.createElement('div');more.className='cap-more';
+  more.innerHTML=`<div><ul>${li(info[0])}</ul><div class="stack">${info[1].map(t=>`<span>${esc(t)}</span>`).join('')}</div></div>`;
+  c.appendChild(more);c.tabIndex=0;c.setAttribute('role','button');c.setAttribute('aria-expanded','false');
+  const toggle=()=>{const o=c.classList.toggle('open');c.setAttribute('aria-expanded',o);};
+  c.addEventListener('click',toggle);
+  c.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle();}});
+});
 
 /* ---------- Capabilities toggle ---------- */
 const caps=document.getElementById('caps'),more=document.getElementById('more');
